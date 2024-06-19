@@ -1,8 +1,13 @@
-
+import math
+import requests
+from pathlib import Path
+from tqdm import tqdm
+import pandas as pd
 
 
 def fetch_issues(
     headers,
+    logger,
     owner="huggingface",
     repo="datasets",
     num_issues=10_000,
@@ -27,12 +32,13 @@ def fetch_issues(
         if len(batch) > rate_limit and len(all_issues) < num_issues:
             all_issues.extend(batch)
             batch = []  # Flush batch for next time period
-            print(f"Reached GitHub rate limit. Sleeping for one hour ...")
+            logger.info(f"Reached GitHub rate limit. Sleeping for one hour ...")
             time.sleep(60 * 60 + 1)
 
     all_issues.extend(batch)
     df = pd.DataFrame.from_records(all_issues)
     df.to_json(f"{issues_path}/{repo}-issues.jsonl", orient="records", lines=True)
-    print(
+    logger.info(
         f"Downloaded all the issues for {repo}! Dataset stored at {issues_path}/{repo}-issues.jsonl"
     )
+    return f"{issues_path}/{repo}-issues.jsonl"

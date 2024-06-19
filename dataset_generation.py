@@ -1,5 +1,6 @@
 import os
 import logging
+from pathlib import Path
 from dotenv import load_dotenv
 
 from datasets import load_dataset
@@ -27,14 +28,12 @@ def check_load_dataset(settings):
 
     # Construct the dataset by fetching issues from github
     headers = create_headers(settings)
-    issues_path
-    fetch_issues(headers,
+    json_file = fetch_issues(headers, logger,
                     owner=settings.owner,
                     repo=settings.repo,
                     # num_issues=settings.num_issues,
                     num_issues=29,
-                    issues_path=settings.owner,
-                    owner=settings.owner,
+                    issues_path=Path(settings.data),
                     )
 
 
