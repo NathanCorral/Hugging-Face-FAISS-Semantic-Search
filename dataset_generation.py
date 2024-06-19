@@ -8,15 +8,6 @@ from dataset_utils import fetch_issues
 
 
 
-def fetch_issues(
-    headers,
-    owner="huggingface",
-    repo="datasets",
-    num_issues=10_000,
-    rate_limit=5_000,
-    issues_path=Path("."),
-):
-
 def check_load_dataset(settings):
     # Create logger
     logger = logging.getLogger('HFGitHubIssuesLogger')
@@ -36,12 +27,13 @@ def check_load_dataset(settings):
 
     # Construct the dataset by fetching issues from github
     headers = create_headers(settings)
+    issues_path
     fetch_issues(headers,
                     owner=settings.owner,
                     repo=settings.repo,
                     # num_issues=settings.num_issues,
                     num_issues=29,
-                    owner=settings.owner,
+                    issues_path=settings.owner,
                     owner=settings.owner,
                     )
 
