@@ -41,6 +41,8 @@ def parse_args():
                         help='Download the dataset from the Huggging Face Repo.  Only used if --scrape is not set.')
     parser.add_argument('--data', type=str, default='./data',
                         help='Location to store downloaded dataset and computed embeddings.')
+    parser.add_argument('--update', action='store_true', default=False,
+                        help='Trigger redownloading and re-computing the embeddings for the datasets.')
 
     # Dataset download settings #
     parser.add_argument('--GITHUB_TOKEN', type=str, 

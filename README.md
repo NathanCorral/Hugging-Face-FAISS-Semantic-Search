@@ -41,6 +41,10 @@ with default parameters, this will:
   - Return the scores and samples of the *k* closest matches (responses).
     - See arguments: --query, --responses
 
+- Display responses for the default query: "How can I load a dataset offline?"
+
+  - Use the flag "--query ..." to make your own search!
+
 
 
 To see the list of other parameters, run:
@@ -51,9 +55,7 @@ python query.py -h
 
 
 
-
-
-### Building the dataset through Githubs API
+## Building the dataset through Githubs API
 
 The dataset can be manually constructed, following:  [https://huggingface.co/learn/nlp-course/chapter5/5](https://huggingface.co/learn/nlp-course/chapter5/5).
 
@@ -84,14 +86,20 @@ The program can load token keys in the following way:
 To manually scrape GitHub the repository issues and their comments, run with the flag:
 
 ```bash
-python query.py --scrape --data="./data/issues2500"
+python query.py --scrape --data="./data/issues2500" --verbose
 ```
 
-- This avoids the default behavior of downloading from a hugging face repo (configured with --dataset)
+- Using "--scrape" avoids the default behavior of downloading from a Hugging Face Dataset repo (configured with --dataset)
 - It will still save the unprocessed issues and the dataset after preprocessing in the location specified by --data.
   - It will create an additional file "./data/issues2500/huggingface-datasets-issues.jsonl" that contains the issues without comments.  This gets automatically checked and will not be re-downloaded if it exists (unless updating).
 
 
+
+**Updating**
+
+Datasets are saved and then reloaded automatically (before and after preprocessing the embeddings).
+
+To redownload the datasets, use the "--update" flag.
 
 
 

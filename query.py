@@ -1,5 +1,5 @@
 
-from query_utils import build_model
+from src.query_utils import build_model
 
 class Query():
     def __init__(self, cfg) -> None:
@@ -30,13 +30,12 @@ class Query():
         return scores, samples
 
 
-
 if __name__ == "__main__":
     import logging
     import pandas as pd
 
-    from parser import parse_args
-    from dataset_generation import get_dataset
+    from src.parser import parse_args
+    from src.dataset_generation import get_dataset
 
     cfg, _ = parse_args()
     cfg.logger = logging.getLogger('HFGitHubIssuesLogger')

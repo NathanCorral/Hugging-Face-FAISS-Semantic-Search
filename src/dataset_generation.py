@@ -10,16 +10,20 @@ from transformers import AutoTokenizer, AutoModel
 
 import torch
 
-from dataset_utils import fetch_issues, remove_pull_and_blank_posts, explode_column
+from src.dataset_utils import fetch_issues, remove_pull_and_blank_posts, explode_column
 
 
 def get_dataset(settings, 
-                update=False, 
+                update=None, 
                 # dataset_dir=None,
                 # issues_dataset_dir=None,
                 # issues_json_file=None,
                 ):
+    
+
     # Default Values
+    if update is None:
+        update = settings.update
     dataset_dir = f"{Path(settings.data)}/{settings.owner}-{settings.repo}-issues-emb"
     issues_json_file = f"{Path(settings.data)}/{settings.owner}-{settings.repo}-issues.jsonl"
     issues_dataset_dir = f"{Path(settings.data)}/{settings.owner}-{settings.repo}-issues"
@@ -224,8 +228,8 @@ def create_headers(settings):
 
 
 if __name__ == "__main__":
-    from parser import parse_args
     import pandas as pd
+    from src.parser import parse_args
     settings, _ = parse_args()
     dataset = get_dataset(settings)
     print(dataset)
