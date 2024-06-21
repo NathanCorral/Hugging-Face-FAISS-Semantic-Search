@@ -40,12 +40,12 @@ def get_dataset(settings,
 
     # Otherwise the dataset possibly needs to be downloaded and constructed.
     if not update and os.path.isdir(issues_dataset_dir):
-        # First try and load from disk
+        # First try and load the already downloaded dataset from disk.  (this is dataset without preprocessing)
         logger.info(f'Loading dataset from disk:  {issues_dataset_dir}')
         issues_dataset = load_from_disk(issues_dataset_dir)
     else:
         # Need to download from scratch
-        if not settings.offline: # TODO: Legacy Name 'offline' needs update
+        if not settings.scrape: 
             # Grab the dataset from HF repo instead of creating it ourselves
             logger.info(f'Fetching the dataset from:  {settings.dataset}')
             issues_dataset = load_dataset(settings.dataset, split="train")
@@ -216,6 +216,7 @@ def create_headers(settings):
     if os.path.exists(".env"):
         load_dotenv()
 
+    # 3. Load already set in environment
     if "GITHUB_TOKEN" in os.environ:
         return {"Authorization": f"token {os.getenv('GITHUB_TOKEN')}"}
 

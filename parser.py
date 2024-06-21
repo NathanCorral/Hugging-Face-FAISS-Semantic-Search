@@ -30,24 +30,24 @@ def parse_args():
 
     # General settings
     parser.add_argument('--owner', type=str, default='huggingface',
-                        help='Owner of the GitHub repository. Default is "huggingface". Arguments other than default are currently untested')
+                        help='Owner of the GitHub repository. Default is "huggingface". Arguments other than default are currently untested and will prompt.')
     parser.add_argument('--repo', type=str, default='datasets',
-                        help='Name of the GitHub repository. Default is "datasets". Arguments other than default are currently untested')
+                        help='Name of the GitHub repository. Default is "datasets". Arguments other than default are currently untested and will prompt.')
     
     # Offline setting
-    parser.add_argument('--offline', action='store_true', default=False,
-                        help='Flag to try to download the dataset to use offline. Optionally also specify a path by using --dataset.')
+    parser.add_argument('--scrape', action='store_true', default=False,
+                        help='Flag to trigger manually scraping GitHub repo for issues and their comments.')
     parser.add_argument('--dataset', type=str, default='lewtun/github-issues',
-                        help='Download this from the Huggging Face dataset repo if offline is set to false')
+                        help='Download the dataset from the Huggging Face Repo.  Only used if --scrape is not set.')
     parser.add_argument('--data', type=str, default='./data',
-                        help='Location to store downloaded dataset and computed embeddings')
+                        help='Location to store downloaded dataset and computed embeddings.')
 
     # Dataset download settings #
     parser.add_argument('--GITHUB_TOKEN', type=str, 
                         help='Github token ID, obtained from https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens. \n\
                         If left blank, will first check for a .env file, then check if exists in os environ, finally will prompt if downloading the dataset from github is required.')
     parser.add_argument('--num_issues', type=int, default=2_500, 
-                        help='Number of issues to construct the dataset from.  WARNING, see https://github.com/huggingface/datasets/issues/3965 before changing the default value')
+                        help='Number of issues to construct the dataset from.  WARNING, see https://github.com/huggingface/datasets/issues/3965 before changing the default value.')
 
     # Debug settings
     parser.add_argument('--verbose', action='store_true', default=False,
@@ -72,15 +72,11 @@ def parse_args():
 
     # Check if owner or repo are not default and prompt user for confirmation
     if args.owner != 'huggingface' or args.repo != 'datasets':
-        confirm = input(f"Getting issues from https://api.github.com/repos/{args.owner}/{args.repo} is untested and must proceed offline (with a downloaded dataset).  Do you want to continue? (yes/no): ")
+        confirm = input(f"Getting issues from https://api.github.com/repos/{args.owner}/{args.repo} is untested and must proceed by scraping GitHub for issues.  Do you want to continue? (yes/no): ")
         if confirm.lower() not in ['yes', 'y']:
             # parser.print_help()
             exit()
-        args.offline = True
-
-    # Adjust dataset default if offline is true
-    if args.offline and args.dataset == 'lewtun/github-issues':
-        args.dataset = f'./data/{args.owner}_{args.repo}_issues'
+        args.scrape = True
 
     # Set up logger based on verbose argument
     setup_logger(args.verbose)
