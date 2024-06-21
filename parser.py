@@ -40,22 +40,16 @@ def parse_args():
     parser.add_argument('--dataset', type=str, default='lewtun/github-issues',
                         help='Download this from the Huggging Face dataset repo if offline is set to false')
     parser.add_argument('--data', type=str, default='./data',
-                        help='Location to store downloaded dataset (if offline) and computed embeddings')
-    # parser.add_argument('--dataset', type=str, default='lewtun/github-issues',
-    #                     help='Dataset path. Default is "lewtun/github-issues" unless --offline is used, then it is "./data/{owner}_{repo}_issues".')
+                        help='Location to store downloaded dataset and computed embeddings')
 
     # Dataset download settings #
     parser.add_argument('--GITHUB_TOKEN', type=str, 
                         help='Github token ID, obtained from https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens. \n\
                         If left blank, will first check for a .env file, then check if exists in os environ, finally will prompt if downloading the dataset from github is required.')
-    # parser.add_argument('--num_issues', type=int, default=2_500, 
-                        # help='Number of issues to construct the dataset from.  WARNING, see https://github.com/huggingface/datasets/issues/3965 before changing the default value')
-    parser.add_argument('--num_issues', type=int, default=100, 
+    parser.add_argument('--num_issues', type=int, default=2_500, 
                         help='Number of issues to construct the dataset from.  WARNING, see https://github.com/huggingface/datasets/issues/3965 before changing the default value')
 
     # Debug settings
-    parser.add_argument('--peak', action='store_true', default=False,
-                        help='Flag to display a few examples from the dataset. Useful for debugging.')
     parser.add_argument('--verbose', action='store_true', default=False,
                         help='Display info on program operation.')
 
