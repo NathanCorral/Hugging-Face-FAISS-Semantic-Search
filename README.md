@@ -106,3 +106,12 @@ To redownload the datasets, use the "--update" flag.
 ### Dependencies
 
 Todo
+
+
+
+## Future Work
+
+- Build Gradio for interactive example (https://huggingface.co/learn/nlp-course/chapter9/1)
+- Create search over stack exchange cooking dataset (https://drive.google.com/drive/folders/1ZWInkPCAZ-RjCr-zZrmH3XcLqSF3SRDe?usp=sharing)
+  - Host: nathan.b.corral@gmail.com
+
